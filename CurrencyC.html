@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CurrenCon.css">
+    <link rel="stylesheet" href="CurrenCon.css?v=1.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -23,27 +23,41 @@
             <div class="dropdown">
                 <div class="from">
                     <p>From</p>
-                    <div class="select-container">
-                        <img src="https://flagsapi.com/US/flat/64.png">
-                       <select name="from"></select> 
+                    <div class="select-container" id="from-select-container">
+                        <div class="select-trigger">
+                            <img src="https://flagsapi.com/US/flat/64.png">
+                            <span class="select-text">USD</span>
+                            <i class="fa-solid fa-chevron-down select-chevron"></i>
+                        </div>
+                        <div class="options-dropdown">
+                            <input type="text" placeholder="Search..." class="search-input">
+                            <div class="options-list"></div>
+                        </div>
                     </div>
                 </div>
                 <i class="fa-solid fa-arrow-right-arrow-left"></i>
                 <div class="to">
                     <p>To</p>
-                    <div class="select-container">
-                        <img src="https://flagsapi.com/IN/flat/64.png">
-                       <select name="to"></select>
+                    <div class="select-container" id="to-select-container">
+                        <div class="select-trigger">
+                            <img src="https://flagsapi.com/IN/flat/64.png">
+                            <span class="select-text">INR</span>
+                            <i class="fa-solid fa-chevron-down select-chevron"></i>
+                        </div>
+                        <div class="options-dropdown">
+                            <input type="text" placeholder="Search..." class="search-input">
+                            <div class="options-list"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="msg">1USD = 90INR</div>
+            <div class="msg">1 USD = -- INR</div>
             <button>Get Exchange Rate</button>
         </form>
     </div>
 
-    <script src="codes.js"></script>
-    <script src="CurrencyConverter.js"></script>
+    <script src="codes.js?v=1.1"></script>
+    <script src="CurrencyConverter.js?v=1.1"></script>
 </body>
 </html>
 <!-- 

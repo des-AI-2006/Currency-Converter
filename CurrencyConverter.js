@@ -1,31 +1,112 @@
 console.log("Hello Baccho....\n\n");
 
 const BASE_URL ="https://latest.currency-api.pages.dev/v1/currencies/usd.json";
-const dropdowns = document.querySelectorAll(".dropdown select");
 const btn = document.querySelector("form button") ;
-const fromCurr = document.querySelector(".from select");
-const toCurr = document.querySelector(".to select");
 const msg = document.querySelector(".msg"); 
 const swapIcon = document.querySelector(".dropdown .fa-arrow-right-arrow-left");
 
-for(let select of dropdowns){
-    for(let currCode in countryList){
-        let newOption = document.createElement("option");
-        newOption.innerText = currCode;
-        newOption.value = currCode;
-        if(select.name ==="from" && currCode==="USD"){
-            newOption.selected="selected";
+let fromCurrValue = "USD";
+let toCurrValue = "INR";
+
+const fromContainer = document.querySelector("#from-select-container");
+const toContainer = document.querySelector("#to-select-container");
+
+const populateOptions = (container, defaultValue) => {
+    const list = container.querySelector(".options-list");
+    list.innerHTML = "";
+    for (let currCode in countryList) {
+        let item = document.createElement("div");
+        item.className = "option-item";
+        if (currCode === defaultValue) {
+            item.classList.add("selected");
         }
-        if(select.name ==="to" && currCode ==="INR"){
-            newOption.selected="selected";
+        item.setAttribute("data-value", currCode);
+
+        let countryCode = countryList[currCode];
+        item.innerHTML = `
+            <img src="https://flagsapi.com/${countryCode}/flat/64.png">
+            <span>${currCode}</span>
+        `;
+
+        item.addEventListener("click", () => {
+            selectOption(container, currCode);
+        });
+
+        list.appendChild(item);
+    }
+};
+
+const selectOption = (container, currCode) => {
+    container.querySelectorAll(".option-item").forEach(item => {
+        if (item.getAttribute("data-value") === currCode) {
+            item.classList.add("selected");
+        } else {
+            item.classList.remove("selected");
         }
-        select.append(newOption);
+    });
+
+    const text = container.querySelector(".select-text");
+    const img = container.querySelector(".select-trigger img");
+    text.innerText = currCode;
+    img.src = `https://flagsapi.com/${countryList[currCode]}/flat/64.png`;
+
+    if (container === fromContainer) {
+        fromCurrValue = currCode;
+    } else {
+        toCurrValue = currCode;
     }
 
-    select.addEventListener("change",(evt) => {
-        updateFlag(evt.target);
+    container.classList.remove("active");
+};
+
+const setupSearch = (container) => {
+    const searchInput = container.querySelector(".search-input");
+    searchInput.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase();
+        const items = container.querySelectorAll(".option-item");
+        items.forEach(item => {
+            const value = item.getAttribute("data-value").toLowerCase();
+            if (value.includes(query)) {
+                item.style.display = "flex";
+            } else {
+                item.style.display = "none";
+            }
+        });
     });
-}
+};
+
+// Toggle open/close dropdowns
+fromContainer.querySelector(".select-trigger").addEventListener("click", (e) => {
+    e.stopPropagation();
+    toContainer.classList.remove("active");
+    fromContainer.classList.toggle("active");
+    if (fromContainer.classList.contains("active")) {
+        fromContainer.querySelector(".search-input").value = "";
+        fromContainer.querySelectorAll(".option-item").forEach(item => item.style.display = "flex");
+        setTimeout(() => fromContainer.querySelector(".search-input").focus(), 50);
+    }
+});
+
+toContainer.querySelector(".select-trigger").addEventListener("click", (e) => {
+    e.stopPropagation();
+    fromContainer.classList.remove("active");
+    toContainer.classList.toggle("active");
+    if (toContainer.classList.contains("active")) {
+        toContainer.querySelector(".search-input").value = "";
+        toContainer.querySelectorAll(".option-item").forEach(item => item.style.display = "flex");
+        setTimeout(() => toContainer.querySelector(".search-input").focus(), 50);
+    }
+});
+
+// Prevent closure when clicking inside option containers
+fromContainer.querySelector(".options-dropdown").addEventListener("click", (e) => e.stopPropagation());
+toContainer.querySelector(".options-dropdown").addEventListener("click", (e) => e.stopPropagation());
+
+// Close open dropdowns when clicking outside
+document.addEventListener("click", () => {
+    fromContainer.classList.remove("active");
+    toContainer.classList.remove("active");
+});
 
 const updateExchangeRate = async() => {
     let amount = document.querySelector(".amount input");
@@ -36,8 +117,8 @@ const updateExchangeRate = async() => {
         amount.value ="1";
     }
 
-    const from = fromCurr.value.toLowerCase();
-    const to = toCurr.value.toLowerCase();
+    const from = fromCurrValue.toLowerCase();
+    const to = toCurrValue.toLowerCase();
 
     const URL  =`https://latest.currency-api.pages.dev/v1/currencies/${from}.json`;
 
@@ -65,23 +146,19 @@ const updateExchangeRate = async() => {
     }
 };
 
-const updateFlag = (element) => {
-    let currCode = element.value;
-    let countryCode = countryList[currCode];
-
-    let newSrc =   `https://flagsapi.com/${countryCode}/flat/64.png`; 
-
-    let img= element.parentElement.querySelector("img");
-    img.src=newSrc;
-};
+// Initialize
+populateOptions(fromContainer, "USD");
+populateOptions(toContainer, "INR");
+setupSearch(fromContainer);
+setupSearch(toContainer);
 
 swapIcon.addEventListener("click", () => {
-    let temp = fromCurr.value;
-    fromCurr.value = toCurr.value;
-    toCurr.value = temp;
-    updateFlag(fromCurr);
-    updateFlag(toCurr);
-    updateExchangeRate();
+    let temp = fromCurrValue;
+    fromCurrValue = toCurrValue;
+    toCurrValue = temp;
+
+    selectOption(fromContainer, fromCurrValue);
+    selectOption(toContainer, toCurrValue);
 });
 
 btn.addEventListener("click", (evt) => {
