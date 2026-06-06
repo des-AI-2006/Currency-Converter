@@ -57,6 +57,7 @@ const selectOption = (container, currCode) => {
     }
 
     container.classList.remove("active");
+    hidePopularConversions();
 };
 
 const setupSearch = (container) => {
@@ -136,6 +137,7 @@ const updateExchangeRate = async() => {
         let finalAmount = amtVal * rate;
 
         msg.innerText = `${amtVal} ${from.toUpperCase()} = ${finalAmount.toFixed(4)} ${to.toUpperCase()}`;
+        updatePopularConversions(rate);
     } catch (error) {
         console.error(error);
         msg.innerText = "Failed to fetch exchange rate. Please try again.";
@@ -144,6 +146,34 @@ const updateExchangeRate = async() => {
         btn.innerText = "Get Exchange Rate";
         btn.style.opacity = "1";
     }
+};
+
+const updatePopularConversions = (rate) => {
+    const popularSec = document.querySelector("#popular-conversions");
+    const grid = popularSec.querySelector(".conversions-grid");
+    grid.innerHTML = "";
+
+    const amounts = [5, 10, 50, 100, 500];
+    const from = fromCurrValue.toUpperCase();
+    const to = toCurrValue.toUpperCase();
+
+    amounts.forEach(amt => {
+        let converted = (amt * rate).toFixed(2);
+        let item = document.createElement("div");
+        item.className = "conversion-item";
+        item.innerHTML = `
+            <span class="from-val">${amt} ${from}</span>
+            <span class="eq-val">=</span>
+            <span class="to-val">${converted} ${to}</span>
+        `;
+        grid.appendChild(item);
+    });
+
+    popularSec.style.display = "flex";
+};
+
+const hidePopularConversions = () => {
+    document.querySelector("#popular-conversions").style.display = "none";
 };
 
 // Initialize

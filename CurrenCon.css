@@ -5,27 +5,36 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
 body {
     background: radial-gradient(circle at 10% 20%, rgba(19, 21, 32, 1) 0%, rgba(12, 13, 20, 1) 100%);
     display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     font-family: 'Outfit', sans-serif;
     color: #e2e8f0;
-    overflow-x: hidden;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 /* Background Glowing Accents */
 body::before, body::after {
     content: '';
-    position: absolute;
+    position: fixed;
     width: 300px;
     height: 300px;
     border-radius: 50%;
     z-index: -1;
     filter: blur(100px);
     opacity: 0.25;
+    pointer-events: none;
 }
 
 body::before {
@@ -46,37 +55,38 @@ body::after {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 2.5rem;
-    border-radius: 1.5rem;
+    padding: 1.4rem 1.5rem;
+    border-radius: 1.25rem;
     width: 100%;
-    max-width: 420px;
+    max-width: 370px;
+    margin: auto;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 h2 {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-weight: 600;
     text-align: center;
     background: linear-gradient(135deg, #a5b4fc 0%, #c084fc 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
     letter-spacing: -0.5px;
 }
 
 form {
-    margin-top: 2rem;
+    margin-top: 1.15rem;
 }
 
 /* Amount Input styling */
 .amount p, .from p, .to p {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #94a3b8;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 
 form input {
@@ -84,13 +94,17 @@ form input {
     background: rgba(15, 23, 42, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.1);
     outline: none;
-    border-radius: 0.75rem;
-    font-size: 1.1rem;
+    border-radius: 0.6rem;
+    font-size: 0.95rem;
     font-weight: 500;
     color: #f8fafc;
-    height: 3.5rem;
-    padding: 0 1rem;
+    height: 2.8rem;
+    padding: 0 0.85rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
 }
 
 form input:focus {
@@ -104,8 +118,8 @@ form input:focus {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-top: 1.5rem;
-    gap: 1rem;
+    margin-top: 0.9rem;
+    gap: 0.85rem;
 }
 
 .from, .to {
@@ -116,8 +130,8 @@ form input:focus {
     position: relative;
     background: rgba(15, 23, 42, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 0.75rem;
-    height: 3.2rem;
+    border-radius: 0.6rem;
+    height: 2.6rem;
     transition: all 0.3s ease;
 }
 
@@ -186,7 +200,6 @@ form input:focus {
     display: flex;
 }
 
-/* Custom search input inside select dropdown */
 .options-dropdown .search-input {
     width: 100%;
     height: 2.2rem !important;
@@ -195,6 +208,10 @@ form input:focus {
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     padding: 0 0.75rem !important;
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
 }
 
 .options-dropdown .search-input:focus {
@@ -268,15 +285,15 @@ form input:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 2.6rem;
-    height: 2.6rem;
-    font-size: 1.1rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 0.9rem;
     color: #818cf8;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     cursor: pointer;
-    margin-top: 1.75rem;
+    margin-top: 1.15rem;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -293,30 +310,33 @@ form input:focus {
     transform: rotate(180deg) scale(0.95);
 }
 
-/* Conversion Result Message */
 .msg {
-    margin: 2rem 0;
+    margin: 1rem 0;
     text-align: center;
-    font-size: 1.25rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: #f8fafc;
     background: rgba(255, 255, 255, 0.03);
-    padding: 1rem;
-    border-radius: 0.75rem;
+    padding: 0.6rem;
+    border-radius: 0.6rem;
     border: 1px dashed rgba(255, 255, 255, 0.1);
     letter-spacing: 0.5px;
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
 }
 
 /* Action Submit Button */
 form button {
     width: 100%;
-    height: 3.5rem;
+    height: 2.8rem;
     border: none;
     outline: none;
-    border-radius: 0.75rem;
+    border-radius: 0.6rem;
     background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     color: #ffffff;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -340,4 +360,150 @@ form button:disabled {
     cursor: not-allowed;
     background: linear-gradient(135deg, #475569 0%, #334155 100%);
     box-shadow: none;
+}
+
+/* Popular Conversions Section */
+.popular-conversions {
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    animation: fadeInSlide 0.4s ease forwards;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.popular-conversions h3 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    margin-bottom: 0.15rem;
+}
+
+.conversions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.35rem;
+}
+
+.conversion-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 0.4rem;
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    transition: all 0.2s ease;
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+}
+
+.conversion-item:hover {
+    background: rgba(129, 140, 248, 0.08);
+    border-color: rgba(129, 140, 248, 0.2);
+}
+
+.conversion-item .from-val {
+    color: #94a3b8;
+    font-size: 0.72rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.conversion-item .eq-val {
+    color: #64748b;
+    font-size: 0.72rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.conversion-item .to-val {
+    font-weight: 600;
+    color: #a5b4fc;
+    font-size: 0.72rem;
+    white-space: nowrap;
+}
+
+/* Mobile responsiveness & small viewport optimization */
+@media (max-width: 480px) {
+    .container {
+        width: 92%;
+        padding: 1.15rem 1.25rem;
+    }
+    .dropdown {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        margin-top: 0.5rem;
+    }
+    .from, .to {
+        width: 100%;
+    }
+    .dropdown > i {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+        transform: rotate(90deg);
+    }
+    .dropdown > i:hover {
+        transform: rotate(270deg) scale(1.1);
+    }
+    .dropdown > i:active {
+        transform: rotate(270deg) scale(0.95);
+    }
+}
+
+@media (max-width: 360px) {
+    .container {
+        padding: 1rem 1.15rem;
+    }
+    h2 {
+        font-size: 1.25rem;
+    }
+    form input, form button {
+        height: 2.6rem;
+        font-size: 0.9rem;
+    }
+    .select-container {
+        height: 2.4rem;
+    }
+    .select-text {
+        font-size: 0.9rem;
+    }
+    .dropdown > i {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.8rem;
+    }
+    .conversion-item {
+        padding: 0.35rem 0.4rem;
+        gap: 0.2rem;
+    }
+    .conversion-item .from-val,
+    .conversion-item .eq-val,
+    .conversion-item .to-val {
+        font-size: 0.68rem;
+    }
+}
+
+@media (max-height: 480px) {
+    html, body {
+        overflow-y: auto; /* Enable scrolling if screen height is too small for layout */
+    }
 }
