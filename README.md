@@ -4,8 +4,6 @@ A modern, visually stunning, dark glassmorphic Currency Converter web applicatio
 
 🌐 **Live Demo**: [currency-converter-rust-rho.vercel.app](https://currency-converter-rust-rho.vercel.app/)
 
-![Currency Converter UI Preview](https://raw.githubusercontent.com/sohamdesai2006-code/Currency-Converter/feature-update/currency_converter_check_1780774587288.png)
-
 ## Features
 
 - 💎 **Premium Glassmorphic Design**: Curated dark color scheme, glowing gradients, subtle micro-animations, and Outfit typography.
